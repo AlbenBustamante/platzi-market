@@ -21,4 +21,8 @@ public class ProductoRepository {
     public Optional<List<Producto>> getEscasos(int cantidadStock) {
         return this.productoCrudRepository.findByCantidadStockLessThanAndEstado(cantidadStock, true);
     }
+
+    public Optional<Producto> getProducto(int idProducto) {
+        return this.productoCrudRepository.findById(idProducto);
+    }
 }
