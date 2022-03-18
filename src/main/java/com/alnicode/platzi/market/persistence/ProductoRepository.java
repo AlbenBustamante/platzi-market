@@ -2,11 +2,13 @@ package com.alnicode.platzi.market.persistence;
 
 import com.alnicode.platzi.market.persistence.crud.ProductoCrudRepository;
 import com.alnicode.platzi.market.persistence.entity.Producto;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ProductoRepository {
     private ProductoCrudRepository productoCrudRepository;
 
