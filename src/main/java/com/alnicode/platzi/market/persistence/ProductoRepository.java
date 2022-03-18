@@ -1,38 +1,51 @@
 package com.alnicode.platzi.market.persistence;
 
+import com.alnicode.platzi.market.domain.Product;
+import com.alnicode.platzi.market.domain.repository.ProductRepository;
 import com.alnicode.platzi.market.persistence.crud.ProductoCrudRepository;
 import com.alnicode.platzi.market.persistence.entity.Producto;
+import com.alnicode.platzi.market.persistence.mapper.ProductMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductoRepository {
+public class ProductoRepository implements ProductRepository {
     private ProductoCrudRepository productoCrudRepository;
+    private ProductMapper mapper;
 
-    public List<Producto> getAll() {
-        return (ArrayList<Producto>) this.productoCrudRepository.findAll();
+    @Override
+    public List<Product> getAll() {
+        List<Producto> productos = (List<Producto>) this.productoCrudRepository.findAll();
+        return this.mapper.toProducts(productos);
     }
 
-    public List<Producto> getByCategoria(int idCategoria) {
-        return this.productoCrudRepository.findByIdCategoriaOrderByNombreAsc(idCategoria);
+    @Override
+    public List<Product> getByCategory(int categoryId) {
+        List<Producto> productos = this.productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
+        return this.mapper.toProducts(productos);
     }
 
-    public Optional<List<Producto>> getEscasos(int cantidadStock) {
-        return this.productoCrudRepository.findByCantidadStockLessThanAndEstado(cantidadStock, true);
+    @Override
+    public Optional<List<Product>> getScarceProducts(int quantity) {
+        Optional<List<Producto>> productos = this.productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity, true);
+        return productos.map(products -> this.mapper.toProducts(products));
     }
 
-    public Optional<Producto> getProducto(int idProducto) {
-        return this.productoCrudRepository.findById(idProducto);
+    @Override
+    public Optional<Product> getProduct(int productId) {
+        return this.productoCrudRepository.findById(productId).map(producto -> this.mapper.toProduct(producto));
     }
 
-    public Producto save(Producto producto) {
-        return this.productoCrudRepository.save(producto);
+    @Override
+    public Product save(Product product) {
+        Producto producto = this.mapper.toProducto(product);
+        return this.mapper.toProduct(this.productoCrudRepository.save(producto));
     }
 
-    public void delete(int idProducto) {
-        this.productoCrudRepository.deleteById(idProducto);
+    @Override
+    public void delete(int productId) {
+        this.productoCrudRepository.deleteById(productId);
     }
 }
