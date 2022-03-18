@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,4 +40,7 @@ public class Compra {
     @ManyToOne
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "compra")
+    private List<ComprasProducto> productos;
 }
