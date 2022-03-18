@@ -25,4 +25,12 @@ public class ProductoRepository {
     public Optional<Producto> getProducto(int idProducto) {
         return this.productoCrudRepository.findById(idProducto);
     }
+
+    public Producto save(Producto producto) {
+        return this.productoCrudRepository.save(producto);
+    }
+
+    public void delete(int idProducto) {
+        this.productoCrudRepository.deleteById(idProducto);
+    }
 }
