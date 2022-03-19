@@ -34,6 +34,7 @@ public class CompraRepository implements PurchaseRepository {
     @Override
     public Purchase save(Purchase purchase) {
         Compra compra = this.mapper.toCompra(purchase);
+        compra.getProductos().forEach(producto -> producto.setCompra(compra));
         return this.mapper.toPurchase(compra);
     }
 }
