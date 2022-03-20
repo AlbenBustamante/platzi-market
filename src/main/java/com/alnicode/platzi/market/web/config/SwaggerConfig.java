@@ -20,10 +20,10 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.alnicode.platzi.market.web.controller"))
                 .paths(PathSelectors.regex("/.*"))
-                .build().apiInfo(this.apiEndoPointInfo());
+                .build().apiInfo(this.apiEndPointInfo());
     }
 
-    private ApiInfo apiEndoPointInfo() {
+    private ApiInfo apiEndPointInfo() {
         return new ApiInfoBuilder().title("API para productos")
                 .description("Servicios para la consulta de productos de supermercado")
                 .license("Apache 2.0")
