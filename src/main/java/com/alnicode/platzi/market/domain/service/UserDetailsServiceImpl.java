@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<User> user = users.stream().filter(user1 ->
                 user1.getUsername().equals(username)).findAny();
 
-        if (user.isEmpty()) {
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("User by name: " + username + " not found!");
         }
 
